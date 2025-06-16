@@ -1,0 +1,83 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+formatters:
+  enable:
+  - gofmt
+  - goimports
+  settings:
+    goimports:
+      local-prefixes:
+      - github.com/blairham/aws-sso-config
+
+linters:
+  enable:
+  - bodyclose
+  - dogsled
+  - dupl
+  - errcheck
+  - funlen
+  - gochecknoinits
+  - goconst
+  - gocyclo
+  - goprintffuncname
+  - gosec
+  - govet
+  - ineffassign
+  - lll
+  - misspell
+  - nakedret
+  - nolintlint
+  - staticcheck
+  - unconvert
+  - unparam
+  - unused
+  - whitespace
+  settings:
+    dupl:
+      threshold: 100
+    funlen:
+      lines: 120
+      statements: 50
+    gocyclo:
+      min-complexity: 25
+    goconst:
+      min-len: 2
+      min-occurrences: 3
+    govet:
+      settings:
+        printf:
+          funcs:
+          - (github.com/blairham/aws-sso-config/pkg/logutils.Log).Infof
+          - (github.com/blairham/aws-sso-config/pkg/logutils.Log).Warnf
+          - (github.com/blairham/aws-sso-config/pkg/logutils.Log).Errorf
+          - (github.com/blairham/aws-sso-config/pkg/logutils.Log).Fatalf
+    lll:
+      line-length: 170
+    misspell:
+      locale: US
+    nolintlint:
+      allow-unused: false
+      require-explanation: false
+      require-specific: false
+  exclusions:
+    rules:
+    - text: "Error return value of .* is not checked"
+      linters:
+      - errcheck
+    - text: "G304"
+      linters:
+      - gosec
+    - text: "G104"
+      linters:
+      - gosec
+    - path: _test\.go
+      linters:
+      - funlen
+      - gocyclo
+      - dupl
+    - text: 'ST1003: should not use underscores in package names'
+      linters:
+      - stylecheck

@@ -1,0 +1,67 @@
+# Docker ignore file for aws-sso-config
+
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CONTRIBUTING.md
+CHANGELOG.md
+SECURITY.md
+LICENSE
+
+# CI/CD
+.github/
+.pre-commit-config.yaml
+
+# Build artifacts
+bin/
+dist/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+.env
+.env.local
+*.local
+
+# Test files
+*_test.go
+test/
+
+# GoReleaser
+.goreleaser.yaml
+
+# Temporary and build files
+*.test
+*.prof
+*.out
+*.log
+*.tmp
+tmp/
+temp/
+
+# Docker files
+Dockerfile*
+docker-compose.yml
+docker-compose.yaml
+
+# Development files
+Makefile
+
+# Config files that shouldn't be in image
+.awsssoconfig
+aws-config.yaml
+aws-config.json
+aws-config.toml

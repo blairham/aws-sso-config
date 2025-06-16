@@ -1,0 +1,5 @@
+# act configuration file
+# Use medium size image for better compatibility
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
+# Use amd64 architecture for M-series Macs
+--container-architecture linux/amd64

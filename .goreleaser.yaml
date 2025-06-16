@@ -1,0 +1,121 @@
+# GoReleaser configuration
+version: 2
+
+# Project metadata
+project_name: aws-sso-config
+
+before:
+  hooks:
+  - go mod tidy
+  - go generate ./...
+
+builds:
+- id: "aws-sso-config"
+  main: .
+  binary: aws-sso-config
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  - darwin
+  - windows
+  goarch:
+  - amd64
+  - arm64
+  # Build flags
+  ldflags:
+  - -s -w
+  - -X main.version={{.Version}}
+  - -X main.commit={{.Commit}}
+  - -X main.buildTime={{.Date}}
+  # Build constraints
+  ignore:
+  - goos: windows
+    goarch: arm64
+
+archives:
+- name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+  files:
+  - README.md
+  - LICENSE*
+  - CHANGELOG.md
+  # Default format (tar.gz) will be used for all platforms
+  # Windows users can use 7-zip or other tools to extract tar.gz files
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+    - "^docs:"
+    - "^test:"
+    - "^ci:"
+    - "^build:"
+    - "merge conflict"
+    - Merge pull request
+    - Merge remote-tracking branch
+    - Merge branch
+  groups:
+  - title: "New Features"
+    regexp: "^.*feat[(\\w)]*:+.*$"
+    order: 0
+  - title: "Bug Fixes"
+    regexp: "^.*fix[(\\w)]*:+.*$"
+    order: 1
+  - title: "Documentation"
+    regexp: "^.*docs[(\\w)]*:+.*$"
+    order: 2
+  - title: "Other Changes"
+    order: 999
+
+release:
+  github:
+    owner: blairham
+    name: aws-sso-config
+  name_template: "{{.ProjectName}} v{{.Version}}"
+  draft: false
+  prerelease: auto
+  make_latest: true
+  mode: replace
+  header: |
+    ## aws-sso-config {{.Version}}
+
+    Download the appropriate binary for your platform below.
+  footer: |
+    **Full Changelog**: https://github.com/blairham/aws-sso-config/compare/{{.PreviousTag}}...{{.Tag}}
+  extra_files:
+  - glob: ./README.md
+  - glob: ./LICENSE*
+
+# Homebrew formula (optional - uncomment and configure if desired)
+# brews:
+#   - repository:
+#       owner: blairham
+#       name: homebrew-tap
+#     directory: Formula
+#     homepage: "https://github.com/blairham/aws-sso-config"
+#     description: "AWS configuration management tool"
+#     license: "MIT"
+#     test: |
+#       system "#{bin}/aws-sso-config --help"
+#     dependencies:
+#       - name: git
+#     install: |
+#       bin.install "aws-sso-config"
+
+# Docker images removed - focusing on binary releases only
+
+# Go module proxy configuration for better go install support
+gomod:
+  proxy: true
+  env:
+  - GOPROXY=https://proxy.golang.org,direct
+  - GOSUMDB=sum.golang.org
+
+# Metadata for Go module registry
+metadata:
+  mod_timestamp: "{{ .CommitTimestamp }}"

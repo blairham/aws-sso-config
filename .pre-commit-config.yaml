@@ -1,0 +1,23 @@
+# For more hooks please see https://pre-commit.com/hooks.html
+
+repos:
+- repo: https://github.com/zricethezav/gitleaks
+  rev: v8.24.0
+  hooks:
+  - id: gitleaks
+
+- repo: https://github.com/dnephin/pre-commit-golang
+  rev: v0.5.1
+  hooks:
+  - id: go-fmt
+  - id: go-mod-tidy
+  - id: golangci-lint
+
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: trailing-whitespace
+    args: [--markdown-linebreak-ext=md]
+  - id: end-of-file-fixer
+  - id: check-yaml

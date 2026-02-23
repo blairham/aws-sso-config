@@ -66,7 +66,7 @@ func (c *cmd) Run(args []string) int {
 	}
 
 	// Open the config file in the editor
-	// #nosec G204 - This is intentional: we want to launch the user's preferred editor
+	// #nosec G204 G702 - This is intentional: we want to launch the user's preferred editor
 	// The editor path is validated above using exec.LookPath
 	cmd := exec.Command(editorPath, configFile)
 	cmd.Stdin = os.Stdin

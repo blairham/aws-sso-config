@@ -146,7 +146,7 @@ func showFileDiff(file1, file2 string) {
 			return
 		}
 	}
-	cmd := exec.Command("diff", file1, file2)
+	cmd := exec.Command("diff", file1, file2) // #nosec G204 - diff command with validated file paths
 	cmd.Stdout = os.Stdout
 	cmd.Run() // Ignore error as diff returns non-zero when files differ
 }

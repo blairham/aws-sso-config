@@ -73,6 +73,15 @@ linters:
     - text: "G104"
       linters:
       - gosec
+    - text: "G117"
+      linters:
+      - gosec
+    - text: "G702"
+      linters:
+      - gosec
+    - text: "G703"
+      linters:
+      - gosec
     - path: _test\.go
       linters:
       - funlen

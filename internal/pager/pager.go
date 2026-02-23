@@ -122,7 +122,7 @@ func (p *Pager) pageOutput(lines []string) error {
 
 	// Add the temporary file as an argument
 	args := append(cmdParts[1:], tmpFile.Name())
-	// #nosec G204 - pagerCmd is validated against allowlist in isValidPagerCommand
+	// #nosec G204 G702 - pagerCmd is validated against allowlist in isValidPagerCommand
 	cmd := exec.Command(cmdParts[0], args...)
 
 	// Connect the pager directly to the terminal for full interactivity
